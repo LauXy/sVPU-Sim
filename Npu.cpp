@@ -30,7 +30,7 @@ Npu::Npu(){
     iniFile.close();
     macNum = npuConfig["MAC_NUM"];
     weightFifoSize = npuConfig["WEIGHT_FIFO_SIZE"];
-    unifiedBufferSize = npuConfig["GLOBAL_BUFFER_SIZE"];
+    unifiedBufferSize = npuConfig["UNIFIED_BUFFER_SIZE"];
 
     string lnnPath = "./ini/largeNnConfig.csv", snnPath = "./ini/smallNnConfig.csv";
     ifstream archFile(snnPath, ios::in);  
@@ -214,11 +214,13 @@ void Npu::NpuSim(){
             else{                
                 if(layerTimer >= GetExeCyclesPerLayer() && isLayerOk && curlayer < 103){
                     cout<<"ROI SegNet - Layer "<<curlayer<<" completed at clock cycle: "<<globalTimer<<endl;
+                    if(curlayer == 0){
+                        startCycle = globalTimer;
+                    }
                     ++curlayer;
                     layerTimer = 0;
                     isLayerOk = false;
                     isNetOk = false;
-                    startCycle = globalTimer;
                     NpuIoManager();
                 }
                 ++layerTimer;
@@ -254,6 +256,9 @@ void Npu::NpuSim(){
                 else{
                     if(layerTimer >= GetExeCyclesPerLayer() && isLayerOk && curlayer < 2){
                         cout<<"DenoiseNet - Layer "<<curlayer<<" completed at clock cycle: "<<globalTimer<<endl;
+                        if(curlayer == 0){
+                            startCycle = globalTimer;
+                        }
                         ++curlayer;
                         layerTimer = 0;
                         startCycle = globalTimer;

@@ -1,7 +1,7 @@
 /*
  * @Author: Liu Xueyuan
  * @Date: 2020-05-07 11:15:48
- * @LastEditTime: 2020-05-09 22:11:00
+ * @LastEditTime: 2020-05-10 09:27:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sVPU-Sim\Cache.cpp
@@ -116,6 +116,7 @@ string bin2hex(const string& bin) {
     return res;
 }
 
+int cacheCnt = 0;
 void Cache::CacheSim(){
     if(!inCacheQueue.empty()){
         MvReqGroup rg = inCacheQueue.front();
@@ -146,17 +147,13 @@ void Cache::CacheSim(){
         returnCacheQueue.pop();
         Replace(callbackAddr);
         for(list<MvReqGroup>::iterator it = pendingList.begin(); it != pendingList.end();){
-            for(list<string>::iterator itt = it->alignedReq.begin(); itt != it->alignedReq.end(); ++itt){
-                if(*itt == callbackAddr){
-                    itt = it->alignedReq.erase(itt);
-                    break;
-                }
-            }
+            it->alignedReq.remove(callbackAddr);
             if(it->alignedReq.empty()){
                 outCacheQueue.push(it->oriMvItem);
                 it = pendingList.erase(it);
             }
             else ++it;
         }
+        
     }
 }

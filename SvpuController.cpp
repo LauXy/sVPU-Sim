@@ -1,7 +1,7 @@
 /*
  * @Author: Liu Xueyuan
  * @Date: 2020-05-08 21:39:53
- * @LastEditTime: 2020-05-09 23:16:19
+ * @LastEditTime: 2020-05-10 09:08:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sVPU-Sim\SvpuController.cpp
@@ -19,6 +19,10 @@ SvpuController::SvpuController(string dataset){
         dt = (enum DeviceType)(dt + 1);
     }
     dtPointer = _decoder;
+    // for(int i = 0; i < 50; ++i){  // for debug
+    //     isDecodeOk[i] = true;
+    //     isSegResOk[i] = true;
+    // }
 }
 
 void SvpuController::RequestScheduling(){

@@ -1,7 +1,7 @@
 /*
  * @Author: Liu Xueyuan
  * @Date: 2020-03-04 21:12:28
- * @LastEditTime: 2020-05-09 22:09:15
+ * @LastEditTime: 2020-05-10 09:10:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \RVPUSim\MvBuffer.cpp
@@ -83,7 +83,7 @@ int MvBuffer::GetCurPage(){
 
 void MvBuffer::MvBufferSim(){
     // if MV Buffer is empty, load mv items
-    if(content.empty()){
+    if(content.empty() && !mvTable.empty()){
         list<MvItem> tmp;
         for(int i = 0; i < size && !mvTable.empty(); ++i){
             tmp.push_back(mvTable.back());
@@ -95,7 +95,7 @@ void MvBuffer::MvBufferSim(){
         isMvBufferOk = false;
     }
     // when all mvitems returned to mvbuffer or mvbuffer is not empty
-    if(isMvBufferOk){
+    if(isMvBufferOk && !content.empty()){
         FindNext();
         if(prefetchPtr == content.end()){
             ResetPtr();        
@@ -104,5 +104,8 @@ void MvBuffer::MvBufferSim(){
             inCacheQueue.push(GenerateAlignedReq(*prefetchPtr));
             prefetchPtr = content.erase(prefetchPtr);
         }
+    }
+    if(content.empty() && mvTable.empty()){
+        curPage = -1;
     }
 }

@@ -29,6 +29,7 @@ void VideoDecoder::LoadData(){
     string mvpath = "./mvs/"+videoName+".csv";
     ifstream mvfile(mvpath.c_str(), ios::in);
     vector<int> elems;
+      
     while(getline(mvfile, mvline)){
         stringstream ss(mvline);
         while(getline(ss, tmpStr, ',')){
