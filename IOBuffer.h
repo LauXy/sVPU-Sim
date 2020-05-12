@@ -1,7 +1,7 @@
 /*
  * @Author: Liu Xueyuan
  * @Date: 2020-05-08 20:43:19
- * @LastEditTime: 2020-05-09 10:29:58
+ * @LastEditTime: 2020-05-11 07:52:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sVPU-Sim\IOBuffer.h
@@ -44,7 +44,6 @@ private:
     Transaction *trans;
 
     int mvBufferReadCnt;
-    int decoderWriteCnt;
     int mappingWriteCnt;
     int segResWriteCnt;
 

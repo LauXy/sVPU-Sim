@@ -213,7 +213,7 @@ void Npu::NpuSim(){
             }
             else{                
                 if(layerTimer >= GetExeCyclesPerLayer() && isLayerOk && curlayer < 103){
-                    cout<<"ROI SegNet - Layer "<<curlayer<<" completed at clock cycle: "<<globalTimer<<endl;
+                    // cout<<"ROI SegNet - Layer "<<curlayer<<" completed at clock cycle: "<<globalTimer<<endl;
                     if(curlayer == 0){
                         startCycle = globalTimer;
                     }
@@ -255,7 +255,7 @@ void Npu::NpuSim(){
                 }
                 else{
                     if(layerTimer >= GetExeCyclesPerLayer() && isLayerOk && curlayer < 2){
-                        cout<<"DenoiseNet - Layer "<<curlayer<<" completed at clock cycle: "<<globalTimer<<endl;
+                        // cout<<"DenoiseNet - Layer "<<curlayer<<" completed at clock cycle: "<<globalTimer<<endl;
                         if(curlayer == 0){
                             startCycle = globalTimer;
                         }

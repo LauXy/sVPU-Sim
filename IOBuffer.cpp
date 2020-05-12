@@ -1,7 +1,7 @@
 /*
  * @Author: Liu Xueyuan
  * @Date: 2020-05-08 21:39:44
- * @LastEditTime: 2020-05-10 09:08:35
+ * @LastEditTime: 2020-05-11 09:11:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sVPU-Sim\IOBuffer.cpp
@@ -21,7 +21,6 @@ IOBuffer::IOBuffer(){
     trans = NULL;
 
 	mvBufferReadCnt = 0;
-	decoderWriteCnt = 0;
 	mappingWriteCnt = 0;
 	segResWriteCnt = 0;
 }
@@ -102,14 +101,13 @@ void IOBuffer::WriteComplete(unsigned id, uint64_t address, uint64_t done_cycle)
 	latency = done_cycle - it->second.front().first;
 
 	if(it->second.front().second == _decoder){
-		++decoderWriteCnt;
-		if(decoderWriteCnt == 7168){
-			bitset<32> addr(address);
-			bitset<15> row(addr.to_string().substr(4,15));
-			int frameId = row.to_ulong() / 56;
+		bitset<32> addr(address);
+		bitset<15> row(addr.to_string().substr(4,15));
+		int frameId = row.to_ulong() / 56;
+		--decoderWriteCnt[frameId];
+		if(decoderWriteCnt[frameId] == 0){
 			isDecodeOk[frameId] = true;
 			cout<<"Frame "<<frameId<<" is written back to DRAM after decoding at clock cycle: "<<globalTimer<<endl;
-			decoderWriteCnt = 0;
 		}
 	}
 	else if(it->second.front().second == _mapbuffer){

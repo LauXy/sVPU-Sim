@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-08 21:03:34
- * @LastEditTime: 2020-05-09 14:28:05
+ * @LastEditTime: 2020-05-11 09:11:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \RVPUSim\GlobalVar.cpp
@@ -21,3 +21,4 @@ queue<MvReqGroup> inCacheQueue;
 queue<MvItem> outCacheQueue;
 queue<string> returnCacheQueue;
 queue<MvItem> outShifterQueue;
+map<int, int> decoderWriteCnt;

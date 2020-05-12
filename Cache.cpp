@@ -1,7 +1,7 @@
 /*
  * @Author: Liu Xueyuan
  * @Date: 2020-05-07 11:15:48
- * @LastEditTime: 2020-05-10 09:27:06
+ * @LastEditTime: 2020-05-10 20:25:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sVPU-Sim\Cache.cpp
@@ -132,6 +132,7 @@ void Cache::CacheSim(){
                     bitset<32> a(*it);
                     instrQ.push(make_pair(a.to_ullong(), DRAMSim::DATA_READ));
                 }
+                else ++mergeCnt;
                 ++it;
             }
         }

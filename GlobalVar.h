@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-08 20:58:09
- * @LastEditTime: 2020-05-09 14:28:16
+ * @LastEditTime: 2020-05-11 09:18:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \RVPUSim\GlobalVar.h
@@ -37,5 +37,6 @@ extern queue<MvReqGroup> inCacheQueue;  // MvBuffer -> Cache
 extern queue<string> returnCacheQueue;  // dram -> Cache
 extern queue<MvItem> outCacheQueue;     // Cache -> ShifterArray
 extern queue<MvItem> outShifterQueue;   // ShifterArray -> MappingBuffer
+extern map<int, int> decoderWriteCnt;
 
 #endif

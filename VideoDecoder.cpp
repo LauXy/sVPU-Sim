@@ -3,7 +3,8 @@
 VideoDecoder::VideoDecoder(){
     freq = 300;   // frequency: 300 MHz
     fps  = 60;
-    latency = freq / fps * 1e+6;
+    latency = 450000;
+    // latency = freq / fps * 1e+6;
     startCycle = 0;
 }
 
@@ -190,6 +191,7 @@ void VideoDecoder::VideoDecoderSim(){
             orderQueue.pop();
             // write decoded frames back to dram
             if(typeList[frameId] == _ipFrame){
+                decoderWriteCnt[frameId] = 7168;
                 for(int row = 0, BASEROW = 56*frameId; row < 56; ++row){
                     for(int col = 0; col < 127; col+=8){
                         for(int bank = 0; bank < 8; ++bank){

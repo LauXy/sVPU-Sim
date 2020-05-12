@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-07 07:56:33
- * @LastEditTime: 2020-05-09 23:13:19
+ * @LastEditTime: 2020-05-10 20:25:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sVPU-Sim\Cache.h
@@ -62,11 +62,11 @@ private:
     bool CanMergeAccess(string dramAddr);
 public:
     queue<pair<uint64_t, DRAMSim::TransactionType> > instrQ;
-    uint64_t hitCnt;
+    uint64_t hitCnt, mergeCnt;
     Cache():memId(5), xBankLen(2), yBankLen(2){
         vector<Bank> tmp(yBankLen);
         cache.assign(xBankLen, tmp);
-        hitCnt = 0;
+        hitCnt = 0, mergeCnt = 0;
     }
     bool CheckHit(string dramAddr);
     void Replace(string dramAddr);

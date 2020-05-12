@@ -1,7 +1,7 @@
 /*
  * @Author: Liu Xueyuan
  * @Date: 2020-05-08 21:39:53
- * @LastEditTime: 2020-05-10 09:08:02
+ * @LastEditTime: 2020-05-10 20:26:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sVPU-Sim\SvpuController.cpp
@@ -84,7 +84,7 @@ void SvpuController::SvpuSim(){
         RequestScheduling();
         iobuffer.IOBufferSim();
     }
-    cout<<"End of simulation! Time consuming: "<<sysTimer<<", Cache hits: "<<cache.hitCnt<<endl;
+    cout<<"End of simulation! Time consuming: "<<sysTimer<<", Cache hits: "<<cache.hitCnt<<", Merge Access: "<<cache.mergeCnt<<endl;
 }
 
 
