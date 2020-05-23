@@ -31,7 +31,7 @@ void MappingBuffer::MappingBufferSim(){
 
         if(itemsInFrame[item.bidx] == 0){
             // generate access requests to write frames to dram(instrQ)
-            cout<<"Frame "<<item.bidx<<" out of mapping buffer"<<endl;
+            Print("Frame "+to_string(item.bidx)+" out of mapping buffer");
             for(int row = 0, BASEROW = 56*item.bidx; row < 56; ++row){
                 for(int col = 0; col < 127; col+=8){
                     for(int bank = 0; bank < 8; ++bank){

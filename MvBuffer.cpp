@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-05-10 09:10:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \RVPUSim\MvBuffer.cpp
+ * @FilePath: \sVPU-Sim\MvBuffer.cpp
  */
 #include "MvBuffer.h"
 

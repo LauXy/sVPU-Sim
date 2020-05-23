@@ -8,7 +8,7 @@ endif
 endif
 CXXFLAGS+=$(OPTFLAGS)
 
-EXE_NAME=RVPUSim
+EXE_NAME=DRAMSim
 STATIC_LIB_NAME := libdramsim.a
 LIB_NAME=libdramsim.so
 LIB_NAME_MACOS=libdramsim.dylib

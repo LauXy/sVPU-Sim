@@ -60,7 +60,6 @@ void SvpuController::RequestScheduling(){
     }
     else if(dtPointer == _mapbuffer){
         if(!mapbuffer.instrQ.empty()){
-            cout<<"Move Instr from mapbuffer to iobuffer"<<endl;
             iobuffer.MoveInstrToIOBuffer(_mapbuffer, mapbuffer.instrQ);
         }
     }
@@ -70,6 +69,38 @@ void SvpuController::RequestScheduling(){
         }
     }
     dtPointer = (enum DeviceType)((dtPointer + 1) % 5);
+}
+
+void SvpuController::CmdParse(int argc, char* argv[]) {
+    map<string, string> cmd;
+    for (int i = 2; i < argc; ++i) {
+        string cmdStr = argv[i];
+        if (cmdStr[0] == '-') {
+            cmdStr = cmdStr.substr(1);
+        }
+        int equPos = cmdStr.find('=');
+        if(equPos != string::npos){
+            cmd[cmdStr.substr(0, equPos)] = cmdStr.substr(equPos + 1);
+        }
+        else cmd[cmdStr.substr(0)] = "true";
+    }
+    if(!cmd["l"].empty()){
+        // Generate log
+        string logName = cmd["l"];
+        if(logName.find('.') == string::npos){
+            logName += ".log";
+        }
+        slog.open(logName, ios::out);
+        WRITE_LOG = true;
+    }
+    if(!cmd["nl"].empty()){
+        // Output nn layer info
+        OUTPUT_NN_LAYER = cmd["nl"] == "true" ? true : false;
+    }
+    if(!cmd["a"].empty()){
+        // Output access info
+        OUTPUT_ACCESS_INFO = cmd["a"] == "true" ? true : false;
+    }
 }
 
 void SvpuController::SvpuSim(){
@@ -84,12 +115,17 @@ void SvpuController::SvpuSim(){
         RequestScheduling();
         iobuffer.IOBufferSim();
     }
-    cout<<"End of simulation! Time consuming: "<<sysTimer<<", Cache hits: "<<cache.hitCnt<<", Merge Access: "<<cache.mergeCnt<<endl;
+    Print("End of simulation! Time consuming: "+to_string(sysTimer)+", Cache hits: "+to_string(cache.hitCnt)+", Merge Access: "+to_string(cache.mergeCnt));
 }
-
 
 int main(int argc, char* argv[]){
     SvpuController svpu(argv[1]);
+    if(argc > 2){
+        svpu.CmdParse(argc, argv);
+    }
     svpu.SvpuSim();
+    if(WRITE_LOG){
+        slog.close();
+    }
     return 0;
 }

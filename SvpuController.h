@@ -9,6 +9,9 @@
 #ifndef _SVPUCONTROLLER_H_
 #define _SVPUCONTROLLER_H_
 
+#include <string>
+#include <map>
+#include <algorithm>
 #include "MvBuffer.h"
 #include "Cache.h"
 #include "ShifterArray.h"
@@ -16,6 +19,7 @@
 #include "VideoDecoder.h"
 #include "Npu.h"
 #include "IOBuffer.h"
+
 using namespace std;
 
 class SvpuController{
@@ -37,6 +41,7 @@ private:
 
 public:
     SvpuController(string dataset);
+    void CmdParse(int argc, char* argv[]);
     void SvpuSim();
 };
 

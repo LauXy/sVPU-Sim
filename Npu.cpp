@@ -192,7 +192,8 @@ void Npu::NpuSim(){
         if(frameType[curframe] == _ipFrame && isDecodeOk[curframe]){
             if(curlayer >= 103 && isNetOk){
                 // large net finished
-                cout<<"I/P Frame "<<curframe<<" completes the neural network.("<<startCycle<<" -> "<<globalTimer<<")"<<endl;
+                // cout<<"I/P Frame "<<curframe<<" completes the neural network.("<<startCycle<<" -> "<<globalTimer<<")"<<endl;
+                Print("I/P Frame "+to_string(curframe)+" completes the neural network.("+to_string(startCycle)+" -> "+to_string(globalTimer)+")");
                 // then write seg results to dram
                 for(int row = 0, BASEROW = 56*curframe; row < 56; ++row){
                     for(int col = 0; col < 127; col+=8){
@@ -213,7 +214,9 @@ void Npu::NpuSim(){
             }
             else{                
                 if(layerTimer >= GetExeCyclesPerLayer() && isLayerOk && curlayer < 103){
-                    // cout<<"ROI SegNet - Layer "<<curlayer<<" completed at clock cycle: "<<globalTimer<<endl;
+                    if(OUTPUT_NN_LAYER){
+                        Print("ROI SegNet - Layer "+to_string(curlayer)+" completed at clock cycle: "+to_string(globalTimer));
+                    }
                     if(curlayer == 0){
                         startCycle = globalTimer;
                     }
@@ -230,7 +233,8 @@ void Npu::NpuSim(){
             // curframe is a B-frame's mapping result
             if(isMapResOk[curframe]){
                 if(curlayer >= 2 && isNetOk){
-                    cout<<"B Frame "<<curframe<<" completes the neural network.("<<startCycle<<" -> "<<globalTimer<<")"<<endl;
+                    // cout<<"B Frame "<<curframe<<" completes the neural network.("<<startCycle<<" -> "<<globalTimer<<")"<<endl;
+                    Print("B Frame "+to_string(curframe)+" completes the neural network.("+to_string(startCycle)+" -> "+to_string(globalTimer)+")");
                     // then write seg results to dram
                     for(int row = 0, BASEROW = 56*curframe; row < 56; ++row){
                         for(int col = 0; col < 127; col+=8){
@@ -255,7 +259,9 @@ void Npu::NpuSim(){
                 }
                 else{
                     if(layerTimer >= GetExeCyclesPerLayer() && isLayerOk && curlayer < 2){
-                        // cout<<"DenoiseNet - Layer "<<curlayer<<" completed at clock cycle: "<<globalTimer<<endl;
+                        if(OUTPUT_NN_LAYER){
+                            Print("Denoising Network - Layer "+to_string(curlayer)+" completed at clock cycle: "+to_string(globalTimer));
+                        }
                         if(curlayer == 0){
                             startCycle = globalTimer;
                         }

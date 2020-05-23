@@ -123,13 +123,7 @@ void VideoDecoder::JudgeBidPred(){
     map<int, int> bpfInBframe;  // frame_B_idx, bidPredFrame_nums
     for(vector<MvItem>::iterator it = mvTable.begin(); it != mvTable.end(); ++it){
         itemsInFrame[it->bidx]++;
-        // if(it->isBidPred){
-        //     bpfInBframe[it->bidx]++;
-        // }
     }
-    // for(map<int, int>::iterator it = itemsInFrame.begin(); it != itemsInFrame.end(); it++){
-    //     it->second -= (bpfInBframe[it->first]/2);
-    // }
 }
 
 /**
@@ -185,8 +179,9 @@ void VideoDecoder::VideoDecoderSim(){
         }
         ++timer;
         if(timer >= latency){
-            int frameId = orderQueue.front(); 
-            cout<<"Frame "<<frameId<<" completes video decoding, ("<<startCycle<<" -> "<<globalTimer<<")"<<endl;
+            int frameId = orderQueue.front();
+            Print("Frame "+to_string(frameId)+" completes video decoding, ("+to_string(startCycle)+" -> "+to_string(globalTimer)+")");
+            // cout<<"Frame "<<frameId<<" completes video decoding, ("<<startCycle<<" -> "<<globalTimer<<")"<<endl;
             timer = 0;
             orderQueue.pop();
             // write decoded frames back to dram

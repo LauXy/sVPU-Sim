@@ -10,8 +10,8 @@
 #define _IOBUFFER_H_
 
 #include <queue>
-#include <iostream>
 #include <bitset>
+#include <stdio.h>
 #include "GlobalVar.h"
 #include "DramAddr.h"
 #include "./DRAMSim/SystemConfiguration.h"

@@ -59,12 +59,19 @@ void IOBuffer::ReadComplete(unsigned id, uint64_t address, uint64_t done_cycle){
 	}
     latency = done_cycle - it->second.front().first;
 
+	if(OUTPUT_ACCESS_INFO){
+		char addrCh[11];
+		sprintf(addrCh, "0x%08lX", address);
+		string addrStr = addrCh;
+		Print("Read Callback: "+addrStr+" latency="+to_string(latency)+"cycles ("+to_string(pendingReadRequests[address].front().first)+"->"+to_string(done_cycle)+")");
+	}
+	
     if(it->second.front().second == _mvbuffer){
         ++mvBufferReadCnt;
 		if(mvBufferReadCnt == 2560){
 			isMvBufferOk = true;
 			mvBufferReadCnt = 0;
-			cout<<"Mv Items are Loaded at clock cycle: "<<globalTimer<<endl;
+			Print("Mv Items are Loaded at clock cycle: "+to_string(globalTimer));
 		}
     }
 	else if(it->second.front().second == _cache){
@@ -100,6 +107,13 @@ void IOBuffer::WriteComplete(unsigned id, uint64_t address, uint64_t done_cycle)
 
 	latency = done_cycle - it->second.front().first;
 
+	if(OUTPUT_ACCESS_INFO){
+		char addrCh[11];
+		sprintf(addrCh, "0x%08lX", address);
+		string addrStr = addrCh;
+		Print("Write Callback: "+addrStr+" latency="+to_string(latency)+"cycles ("+to_string(pendingWriteRequests[address].front().first)+"->"+to_string(done_cycle)+")");
+	}
+
 	if(it->second.front().second == _decoder){
 		bitset<32> addr(address);
 		bitset<15> row(addr.to_string().substr(4,15));
@@ -107,7 +121,8 @@ void IOBuffer::WriteComplete(unsigned id, uint64_t address, uint64_t done_cycle)
 		--decoderWriteCnt[frameId];
 		if(decoderWriteCnt[frameId] == 0){
 			isDecodeOk[frameId] = true;
-			cout<<"Frame "<<frameId<<" is written back to DRAM after decoding at clock cycle: "<<globalTimer<<endl;
+			// cout<<"Frame "<<frameId<<" is written back to DRAM after decoding at clock cycle: "<<globalTimer<<endl;
+			Print("Frame "+to_string(frameId)+" is written back to DRAM after decoding at clock cycle: "+to_string(globalTimer));
 		}
 	}
 	else if(it->second.front().second == _mapbuffer){
@@ -117,7 +132,8 @@ void IOBuffer::WriteComplete(unsigned id, uint64_t address, uint64_t done_cycle)
 			bitset<15> row(addr.to_string().substr(4,15));
 			int frameId = row.to_ulong() / 56;
 			isMapResOk[frameId] = true;
-			cout<<"Frame "<<frameId<<" is written back to DRAM after mapping at clock cycle: "<<globalTimer<<endl;
+			// cout<<"Frame "<<frameId<<" is written back to DRAM after mapping at clock cycle: "<<globalTimer<<endl;
+			Print("Frame "+to_string(frameId)+" is written back to DRAM after mapping at clock cycle: "+to_string(globalTimer));
 			mappingWriteCnt = 0;
 		}
 	}

@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-05-09 10:37:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \RVPUSim\VideoDecoder.h
+ * @FilePath: \sVPU-Sim\VideoDecoder.h
  */
 #ifndef _VIDEODECODER_H_
 #define _VIDEODECODER_H_
@@ -25,9 +25,6 @@ using namespace std;
 
 const int MAX_FRAMES_NUM = 105;
 
-// enum FrameType{
-//     _ipFrame, _bFrame
-// };
 
 class Graph {
 public:

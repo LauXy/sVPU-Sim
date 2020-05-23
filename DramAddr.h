@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-05-09 08:45:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \RVPUSim\DramAddr.h
+ * @FilePath: \sVPU-Sim\DramAddr.h
  */
 #ifndef _DRAMADDR_H_
 #define _DRAMADDR_H_

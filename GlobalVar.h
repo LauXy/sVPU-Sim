@@ -1,10 +1,10 @@
 /*
- * @Author: your name
+ * @Author: Liu Xueyuan
  * @Date: 2020-03-08 20:58:09
  * @LastEditTime: 2020-05-11 09:18:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \RVPUSim\GlobalVar.h
+ * @FilePath: \sVPU-Sim\GlobalVar.h
  */
 #ifndef _GLOBALVAR_H_
 #define _GLOBALVAR_H_
@@ -12,6 +12,8 @@
 #include <vector>
 #include <queue>
 #include <list>
+#include <iostream>
+#include <fstream>
 #include "MvItem.h"
 #include "./DRAMSim/Transaction.h"
 
@@ -38,5 +40,10 @@ extern queue<string> returnCacheQueue;  // dram -> Cache
 extern queue<MvItem> outCacheQueue;     // Cache -> ShifterArray
 extern queue<MvItem> outShifterQueue;   // ShifterArray -> MappingBuffer
 extern map<int, int> decoderWriteCnt;
+extern ofstream slog;
+extern bool WRITE_LOG;
+extern bool OUTPUT_NN_LAYER;
+extern bool OUTPUT_ACCESS_INFO;
+extern void Print(string str);
 
 #endif
