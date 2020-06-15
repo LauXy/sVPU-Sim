@@ -115,7 +115,9 @@ void SvpuController::SvpuSim(){
         RequestScheduling();
         iobuffer.IOBufferSim();
     }
+    uint64_t accessSum = decoderAccCnt + mvBufferAccCnt + cacheAccCnt + mapBufferAccCnt + npuAccCnt;
     Print("End of simulation! Time consuming: "+to_string(sysTimer)+", Cache hits: "+to_string(cache.hitCnt)+", Merge Access: "+to_string(cache.mergeCnt));
+    Print("Memory access ratio: Decoder: "+to_string(1.0*decoderAccCnt/accessSum)+", NPU: "+to_string(1.0*npuAccCnt/accessSum)+", MvBuffer: "+to_string(1.0*mvBufferAccCnt/accessSum)+", Cache: "+to_string(1.0*cacheAccCnt/accessSum)+", MappingBuffer: "+to_string(1.0*mapBufferAccCnt/accessSum));
 }
 
 int main(int argc, char* argv[]){

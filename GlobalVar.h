@@ -45,5 +45,7 @@ extern bool WRITE_LOG;
 extern bool OUTPUT_NN_LAYER;
 extern bool OUTPUT_ACCESS_INFO;
 extern void Print(string str);
+extern uint64_t decoderAccCnt, mvBufferAccCnt;
+extern uint64_t cacheAccCnt, mapBufferAccCnt, npuAccCnt;
 
 #endif

@@ -25,6 +25,8 @@ ofstream slog;
 bool WRITE_LOG = false;
 bool OUTPUT_NN_LAYER = false;
 bool OUTPUT_ACCESS_INFO = false;
+uint64_t decoderAccCnt = 0, mvBufferAccCnt = 0;
+uint64_t cacheAccCnt = 0, mapBufferAccCnt = 0, npuAccCnt = 0;
 
 void Print(string str){
     if(WRITE_LOG){

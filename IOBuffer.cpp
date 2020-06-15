@@ -160,11 +160,22 @@ void IOBuffer::WriteComplete(unsigned id, uint64_t address, uint64_t done_cycle)
 }
 
 void IOBuffer::MoveInstrToIOBuffer(DeviceType src, queue<pair<uint64_t, DRAMSim::TransactionType> >& instrQ){
-	while(!instrQ.empty()){
-		pair<uint64_t, DRAMSim::TransactionType> instr = instrQ.front();
-		instrQ.pop();
-		Req r(instr.first, instr.second, src);
-		pendingRequestsList.push(r);
+	if(!instrQ.empty()){
+		int accessCnt = instrQ.size();
+		switch (src)
+		{
+		case _decoder: decoderAccCnt += accessCnt; break;
+		case _mvbuffer: mvBufferAccCnt += accessCnt; break;
+		case _cache: cacheAccCnt += accessCnt; break;
+		case _mapbuffer: mapBufferAccCnt += accessCnt; break;
+		case _npu: npuAccCnt += accessCnt; break;
+		}
+		while(!instrQ.empty()){
+			pair<uint64_t, DRAMSim::TransactionType> instr = instrQ.front();
+			instrQ.pop();
+			Req r(instr.first, instr.second, src);
+			pendingRequestsList.push(r);
+		}
 	}
 }
 
